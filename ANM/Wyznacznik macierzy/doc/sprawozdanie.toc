@@ -1,0 +1,18 @@
+\contentsline {section}{\numberline {1}Wst\IeC {\k e}p}{2}
+\contentsline {subsection}{\numberline {1.1}Macierz kwadratowa (prostok\IeC {\k a}tna)}{2}
+\contentsline {subsection}{\numberline {1.2}Wyznacznik macierzy}{2}
+\contentsline {subsection}{\numberline {1.3}Algorytm}{2}
+\contentsline {subsection}{\numberline {1.4}Zasotoswanie wyznacznika macierzy}{2}
+\contentsline {section}{\numberline {2}Sposoby testowania}{3}
+\contentsline {subsection}{\numberline {2.1}Macierz wype\IeC {\l }niona losowymi liczbami}{3}
+\contentsline {subsection}{\numberline {2.2}Macierz Hilberta}{3}
+\contentsline {subsubsection}{\numberline {2.2.1}Definicja}{3}
+\contentsline {subsubsection}{\numberline {2.2.2}Obliczenie odchyle\IeC {\'n} od wynik\IeC {\'o}w prawid\IeC {\l }owych}{3}
+\contentsline {subsection}{\numberline {2.3}Macierz Pei}{3}
+\contentsline {subsubsection}{\numberline {2.3.1}Definicja}{3}
+\contentsline {subsubsection}{\numberline {2.3.2}Obliczenie odchyle\IeC {\'n} od wynik\IeC {\'o}w prawid\IeC {\l }owych}{3}
+\contentsline {section}{\numberline {3}Wyniki testowania}{4}
+\contentsline {subsection}{\numberline {3.1}Wyniki dla macierzy losowych}{4}
+\contentsline {subsection}{\numberline {3.2}Wyniki dla macierzy Hilberta}{4}
+\contentsline {subsection}{\numberline {3.3}Wyniki dla macierzy Pei}{4}
+\contentsline {section}{\numberline {4}Wnioski}{5}

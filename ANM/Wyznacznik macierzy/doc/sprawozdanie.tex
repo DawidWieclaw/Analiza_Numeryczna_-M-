@@ -1,0 +1,147 @@
+\documentclass{article}
+
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsthm}
+
+
+\title{\centering \Large Analiza Numerczna - zadanie 3.13 \\
+\large Obliczanie wyznacznika macierzy przy pomocy algorytmu eliminacji Gaussa z częsciowym wyborem elementów głównych}
+
+\author{\Large Prowadzący: Paweł Woźny\thanks{\textit{E-mail}: \texttt{Pawel.Wozny@ii.uni.wroc.pl}}%
+	    \and \Large autor: Dawid Więcław}
+
+\addtolength{\textwidth}{4cm}
+\addtolength{\hoffset}{-2cm}
+\addtolength{\textheight}{4cm}
+\addtolength{\voffset}{-2cm}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\thispagestyle{empty}
+\setcounter{page}{1}
+\newpage
+\section{Wstęp}
+\subsection{Macierz kwadratowa (prostokątna)}
+Macierz prostokątna jest strukturą w postaci tablicy dwuwymiarowej w ktorej przetrzymywane są liczby rzeczywiste (lub dowolne inne elementu z pierścienia przemiennego). Macierz kwadratowa jest macierzą porstokątną o tej samej liczbie wiersz i kolumn. Definicja formalna macierzy prostokątnej mówi o niej jako o odwzorowaniu $\{1,2, ..., n\} \times \{1, 2, ..., m\} \to R$, gdzie $R$ jest pierścieniem nad którym zbudowana jest macierz. 
+\subsection{Wyznacznik macierzy}
+\large
+\hspace{3mm} Wyznacznik macierzy jest funkcją $det(A): M_{n \times n}({\rm I\!R}) \to {\rm I\!R}$ dla tego zadania pierścieniem nad którym są określone macierze jest pierścieniem liczb rzeczywistych.
+\subsection{Algorytm}
+\hspace{3mm} Sposób wyliczenia wyznacznika macierzy w dołączonym programie opiera się o metodę eliminacji Gaussa z wyborem częściowym elementów głownych. Metoda ta opiera się o następujący schemat:
+\begin{itemize} 
+    \item Przypisanie: $m_{i,j}^{(k)}=m_{i,j}^{(k-1)} - \frac{m_{i,k-1}^{(k-1)}}{m_{k-1,k-1}^{(k-1)}}$ w przypadku gdy $m_{k-1,k-1}^{(k-1)} \neq 0$
+    \item Zamianę wiersza $k-1$ z wierszem $l>k-1$ tak, aby $m_{l,k-1}^{(k-1)} \neq 0$
+    \item Zwrócenie 0 w przypadku niemożliwości znalezienia elementu głównego. (Algorytm nie może być kontynuowany, w przypadku klasycznej eliminacji powinna zostać informacja o niemożliwości wykonania algorytmu jednak jest to równoważne z zerowym wyznacznikiem macierzy)
+\end{itemize}
+
+Gdzie dla $a_{i,j}^{(k)}$ $i$ oznacza nr wiersza macierzy, $j$ oznacza numer kolumny macierzy, a $k$ oznacza numer iteracji. Po wykonaniu się algorytmu osiągnięta zostaje macierz trójkątna górna dla macierzy wejsciowej. Obliczenie wyznacznika macierzy górnej trójkątnej polega na wyznaczeniu iloczynu liczb znajdujących się na przekątnej tej macierzy.
+\subsection{Zasotoswanie wyznacznika macierzy}
+\begin{enumerate}
+\item Rozwiązywanie układów równań liniowych:
+Dla układu równań $Ax=b$.
+Układ ten jest oznacozny wtedy i tylko wtedy gdy wyznacznik macierzy A jest niezerowy.
+\item W analizie matematycznej podczas zamiany zmiennych po których się całkuje w liczeniu całek  konieczne jest obliczenie wyznacznika macierzy zwanej Jakobianem.
+\end{enumerate}
+
+
+
+\newpage
+\section{Sposoby testowania}
+\subsection{Macierz wypełniona losowymi liczbami}
+W pierwszym etapie testowania zaimplementowanej metody obliczania wyznacznika będzie ona testowana na macierzach losowych. W tym celu w pliku program.jl zostały napisane funkcje
+\begin{itemize}
+    \item $Lower(n,maxVal)$ generuje macierz dolnotrójkątną z jedynkami na przekątnej
+    \item $Upper(n, maxVal)$ generuje macierz górnotrójkątną
+    \item $genRandomMatrix(n, maxVal)$ zwraca iloczyn macierzy powstałych z dwóch poprzednich metod a także dokładny wyznacznik policzony jako iloczyn elementów znajdujących się na przekątnej macierzy powstałej w metodzie $Upper(n, maxVal)$.
+\end{itemize}
+
+Argument n stanowi rozmiar macierzy $(n \times n)$, a argument maxVal oznacza maksymalną wartość w powstałych macierzach trójkątnych (w docelowej macierzy powstałej w metodzie genRandomMatrix wartość ta może być i zwykle jest przekroczona).
+
+\subsection{Macierz Hilberta}
+
+\subsubsection{Definicja}
+Jest to macierz $[h_{i,j}]$, gdzie $h_{i,j}=\frac{1}{i+j-1}$, są to macierze szczególne ze względu na ich uwarunkowanie. Przez złe uwarunkowanie działania numeryczne na tej macierzy nie dają dobrych wyników, a także nie da się w łatwy sposób obliczyć jej wyznacznika.
+
+\subsubsection{Obliczenie odchyleń od wyników prawidłowych}
+W celu umożliwienia porównania wyników z prawidłowymi, w programie została użyta funkcja biblioteczna $LinearAlgebra.det(M)$, o kórej zostało założone, że przyjmuje wyniki na tyle dobre, że można porównywać wyniki osiągnięte z metody $elimination(M)$ z wynikami tej funkcji bibliotecznej.
+
+\subsection{Macierz Pei}
+\subsubsection{Definicja}
+Jest to macierz $[p_{i,j}]$, gdzie
+\begin{itemize}
+    \item $p_{i,j}=p$ gdy $i=j$, gdzie $p$ jest wcześniej ustaloną liczbą
+    \item $p_{i,j}=1$ w przeciwnym przypadku
+\end{itemize}
+
+
+\subsubsection{Obliczenie odchyleń od wyników prawidłowych}
+Tak samo jak w przypadku macierzy Hilberta obliczenie wyznacznika jest utrudnione uwarunkowaniem macierzy dlatego także dla tego przypadku została użyta funkcja biblioteczna $LinearAlgebra.det(M)$ w celu oblcizenia wartości prawidłowych.
+
+\section{Wyniki testowania}
+Testy zostały przeprowadzone dla $10 000$ macierzy, a rozmiary macierzy są liczbami losowymi z przedziału $[2,50]$. Skuteczność metody została odwzorowana poprzez procent prawidłowo policzonych wartości. Prawidłowa wartośc jest zdefiniowana jako 
+\newline
+$|prawidlowa\_wartosc - det(M)|<\epsilon$.
+\subsection{Wyniki dla macierzy losowych}
+W przypadku macierzy losowych, wartości komórek są liczbami zmiennoprecinkowymi z przedziału $[-100,100]$. Wyniki przedstawiają się następująco:
+
+\begin{table}[htbp]
+\centering
+\caption[Short Heading]{Wyniki testów dla macierzy losowych}
+\begin{tabular}{|c|c|c|c|c|c|} \hline
+Precyzja & $\epsilon$ & procent skuteczności & błąd maksymalny& maksymalny błąd funkcji bibliotecznej\\ \hline
+16 bit & $10^{-2}$ & $3.3 \%$ & $2.2*10^{116}$ & $3.7*10^{110}$\\ \hline
+32 bit & $10^{-4}$ & $7.4 \%$ & $1.3*10^{93}$ & $2.5*10^{93}$\\ \hline
+64 bit & $10^{-8}$ &  $15 \%$ & $3.3*10^{72}$ & $3*10^{71}$\\ \hline
+1024 bit & $10^{-200}$ & $100 \%$ & $6.5*10^{-221}$ & $6.5*10^{-221}$\\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Wyniki dla macierzy Hilberta}
+W przypadku macierzy Hilberta, wartości komórek są zdefiniowane w poprzednim punkcie. Wyniki przedstawiają się następująco:
+
+\begin{table}[htbp]
+\centering
+\caption[Short Heading]{Wyniki testów dla macierzy Hilberta}
+\begin{tabular}{|c|c|c|c|c|} \hline
+Precyzja & $\epsilon$ & procent skuteczności & błąd maksymalny\\ \hline
+16 bit & $10^{-2}$ & $6.1 \%$ & $2.1*10^{3}$\\ \hline
+32 bit & $10^{-4}$ & $10 \%$ & $6.2*10^{1}$\\ \hline
+64 bit & $10^{-8}$ & $21 \%$ & $1.5*10^{-2}$\\ \hline
+1024 bit & $10^{-200}$ & $100 \%$ & $7*10^{-292}$\\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Wyniki dla macierzy Pei}
+W przypadku macierzy Pei, wartości komórek zostały zdefiniowane w sposobach testowania, zaś $p=1 \pm \frac{rand}{10}$, gdzie $rand$ jest losową liczbą z przedziału $[0,1]$ Wyniki przedstawiają się następująco:
+
+\begin{table}[htbp]
+\centering
+\caption[Short Heading]{Wyniki testów dla macierzy Pei}
+\begin{tabular}{|c|c|c|c|c|} \hline
+Precyzja & $\epsilon$ & procent skuteczności & błąd maksymalny\\ \hline
+16 bit & $10^{-4}$ & $52 \%$ & $8.6*10^{-1}$\\ \hline
+32 bit & $10^{-8}$ & $78 \%$ & $3.2*10^{-4}$\\ \hline
+64 bit & $10^{-16}$ & $100 \%$ & $4.7*10^{-17}$\\ \hline
+1024 bit & $10^{-300}$ & $100 \%$ & $2.4*10^{-304}$\\ \hline
+\end{tabular}
+\end{table}
+
+\newpage
+\section{Wnioski}
+Z otrzymanych wyników można wywnioskować, że obliczanie wyznacznika macierzy metodą eliminacji Gaussa, jest procesem wymagającym dużej precyzji danych (dla implementacji tego algorytmu w pliku program.jl).
+Wartość numeryczną tego algorytmu można poprawić poprzez zastąpenie instrukcji warunkowej sprawdzającej czy element głowny macierzy wynosi zero na sprawdzenie czy wartość bezwzględna tego elementu jest mniejsza od ustalonego $\epsilon$, jednak to byłaby już implementacja pośrednia pomiędzy wyborem częściowym a całkowitym elementów głównych co by stanowiło sprzeczność z treścią zadania.  Prowadzi to do ostatecznego wniosku, że obliczanie wyznacznika macierzy jest zadaniem wymagającym dużych zasobów aby wyniki miały sens.
+
+
+
+\begin{thebibliography}{9}
+\itemsep2pt
+\bibitem{LJ} L. Jankowski, G. Szkapiak, Algebra Liniowa,  Uniwersytet Wrocławski
+
+\bibitem{ZF}  Z. Fortuna, B. Macukow, J. Wąsowski Kuratowski, Metody Numeryczne, Wydawnictwo Naukowo-Techniczne , Warszawa 1982. 1993.
+
+\end{thebibliography}
+
+\end{document}
