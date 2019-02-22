@@ -1,0 +1,33 @@
+#plansza
+{
+    position: fixed; left: 350px;
+    height: 600px;
+    width: 600px;
+    background-color: bisque;
+}
+#centrum
+{
+    position: absolute; left: 250px; top: 250px;  
+    height: 100px;
+    width: 100px;
+    background-color: blue;
+}
+#kwadrat_lotny
+{
+    height: 60px;
+    width: 60px;
+    background-color: red;
+}
+
+#stoper
+{
+    background-color: aqua;
+    position: fixed; left:100 px;
+    width: 200px;
+    height: 50px;
+}
+#wyniki
+{
+    position:fixed; left: 230px;
+    background-color: beige;
+}

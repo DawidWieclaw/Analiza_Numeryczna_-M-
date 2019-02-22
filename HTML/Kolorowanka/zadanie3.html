@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<title>tytuł</title>
+<meta charset="UTF-8"/>
+<link rel="Stylesheet" type="text/css" href="zadanie3.css" />
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+        function allowDrop(ev) 
+        {
+            ev.preventDefault();
+        }
+        
+        function drag(ev) 
+        {
+            ev.dataTransfer.setData("text", ev.target.style.backgroundColor);
+        }
+        
+        function drop(ev) 
+        {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            ev.target.style.backgroundColor=data;
+        }
+        </script>
+</head>
+
+
+<body>
+    <div class="box">
+        <div class="kwadrat" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="kwadrat" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="kwadrat" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="kwadrat" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="kwadrat" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="kwadrat" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="kwadrat" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="kwadrat" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="kwadrat" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    </div>
+
+    <div class="colours">
+        <div ondragstart="drag(event)" class="colour" draggable="true" style="background-color:red"></div>
+        <div ondragstart="drag(event)" class="colour" draggable="true" style="background-color:blue"></div>
+        <div ondragstart="drag(event)" class="colour" draggable="true" style="background-color:blueviolet"></div>
+        <div ondragstart="drag(event)" class="colour" draggable="true" style="background-color:brown"></div>
+        <div ondragstart="drag(event)" class="colour" draggable="true" style="background-color:burlywood"></div>
+        <div ondragstart="drag(event)" class="colour" draggable="true" style="background-color:wheat"></div>
+        <div ondragstart="drag(event) "class="colour" draggable="true" style="background-color:palegreen"></div>
+        <div ondragstart="drag(event)" class="colour" draggable="true" style="background-color:black"></div>
+        <div ondragstart="drag(event)" class="colour" draggable="true" style="background-color:orange"></div>
+        <div ondragstart="drag(event)" class="colour" draggable="true" style="background-color:green"></div>
+    </div>
+</body>
+</html>

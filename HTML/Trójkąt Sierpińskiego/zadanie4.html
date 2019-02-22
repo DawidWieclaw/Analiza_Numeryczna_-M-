@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>asd</title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<body>
+
+<canvas id="myCanvas" width="1000" height="630" style="border:1px solid #d3d3d3;"></canvas>
+
+<label for="liczba" style="position: fixed; left:1100px; top:170px">liczba iteracji:</label>
+<input type="number" value="1000" id="liczba" style="position: fixed; left:1100px; top:200px">
+<input id="wyk" type="button" style="position: fixed; left:1100px; top:230px" value="dodaj">
+<input id="cl" type="button" style="position: fixed; left:1100px; top:250px" value="czysc">
+
+
+
+<script>
+var canvas = document.getElementById("myCanvas");
+var width = canvas.width;
+var height = canvas.height;
+var ctx = canvas.getContext("2d");
+var imageData = ctx.createImageData(width, height);
+
+
+function maluj(x,y)//y - pieterka w dol
+{
+    x=Math.floor(x);
+    y=Math.floor(y);
+    imageData.data[(y*width+x)*4+3]=255;
+}
+
+var Dnx=width/2; //zaczynam od pkt A
+var Dny=0;
+
+function sierp()
+{
+    r = Math.random()*3;
+    if(r>2) //A
+    {
+        Dnx=(Dnx+width/2)/2;
+        Dny=(Dny+0)/2;
+        maluj(Dnx,Dny); //pomiedzy dn a a
+    }
+    else if(r>1) //B
+    {
+        Dnx=(Dnx+0)/2;
+        Dny=(Dny+height-1)/2;
+        maluj(Dnx,Dny);
+    }
+    else // C
+    {
+        Dnx=(Dnx+width-1)/2;
+        Dny=(Dny+height-1)/2;
+        maluj(Dnx,Dny);
+    }
+}
+
+function wykonaj()
+{
+    n=$("#liczba").val();
+    for(i=0; i<n; i++)
+    {
+        sierp();
+    }
+    ctx.putImageData(imageData, 0,0)
+}
+
+$("#wyk").on("click", wykonaj);
+
+function czysc()
+{
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    imageData = ctx.createImageData(width, height);
+}
+$("#cl").on("click", czysc);
+
+</script>
+
+</body>
+</html>

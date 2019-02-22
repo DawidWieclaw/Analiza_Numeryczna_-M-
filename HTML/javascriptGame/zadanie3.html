@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<title>tytuł</title>
+<link rel="Stylesheet" type="text/css" href="zadanie3.css" />
+<meta charset="UTF-8"/>
+</head>
+<body>
+    <div id="plansza">
+        <div id="centrum"></div>
+    </div>
+    <div id="stoper">
+        <p id="czas"></p>
+    </div>
+    <div id="wyniki">Wyniki: <br/></div>
+
+
+
+
+  <script>
+        var m, s, cs, started;
+        m = 0;
+        s = 0;
+        cs = 0;
+        started=0;
+        var posible = false;
+        var c = document.getElementById("plansza");
+        const kwadraty = [];
+        kwadraty.push(document.createElement("div"));
+        kwadraty.push(document.createElement("div"));
+        kwadraty.push(document.createElement("div"));
+        kwadraty.push(document.createElement("div"));
+        licznik = 4;
+        function randomNumberx(i) 
+        {
+            if(i===1) return Math.floor(Math.random()*190);
+            if(i===2) return Math.floor(Math.random()*190);
+            if(i===3) return 600 - 70 - Math.floor(Math.random()*190);
+            if(i===4) return 600 - 70 - Math.floor(Math.random()*190);
+        }
+        function randomNumbery(i) 
+        {
+            if(i===1) return Math.floor(Math.random()*190);
+            if(i===2) return 600 - 70 - Math.floor(Math.random()*190);
+            if(i===3) return Math.floor(Math.random()*240);
+            if(i===4) return 600 - 70 - Math.floor(Math.random()*190);
+        }
+
+        function finito()
+        {
+            document.getElementById("wyniki").innerHTML=document.getElementById("wyniki").innerHTML + m + ":" + s + ":" + cs + "<br/>";
+            started=false;
+            licznik=4;
+            help=false;
+        }
+        
+        function count()
+        {
+            cs++;
+	        if(cs == 100) {
+		        cs = 0;
+	            s++;
+    	        if(s == 60)
+		        {
+		    	    s = 0;
+	        	    m++;
+		        }
+            }
+            refresh();
+        }
+
+        function refresh()
+        {
+            var czas ="Twoj czas: " + m + ":" + s + ":" + cs;
+            document.getElementById("czas").innerHTML = czas;
+        }
+        var x;
+        var help=false;
+
+        for (let i = 0; i < 4; i++) //tworzenie kwadratow czerwonych - zielonych
+                {
+                    kwadraty[i].id="kwadrat_lotny";
+                    kwadraty[i].style.position="absolute";
+                    kwadraty[i].addEventListener('mouseenter', function()
+                        { 
+                            if(kwadraty[i].style.background!="green" && posible) 
+                            {
+                                licznik-=1;
+                                kwadraty[i].style.background="green"; 
+                            }
+                            else if(kwadraty[i].style.background!="red")
+                            {
+                                s+=20; //karne 20 s za ponowne najechanie lub nie wrocenie do kwadratu
+                            }
+                            posible = false;
+                        }, false);
+                }
+
+        function start()
+        {
+            posible=true;
+            if(!started)
+            {
+                m=0;
+                s=0;
+                cs=0;
+                for (let i = 0; i < 4; i++) //tworzenie kwadratow czerwonych - zielonych
+                {
+                    started=true;
+                    kwadraty[i].style.left=randomNumberx(i+1)+"px";
+                    kwadraty[i].style.top=randomNumbery(i+1)+"px";
+                    kwadraty[i].style.background="red";
+                    c.appendChild(kwadraty[i]);
+                }
+                x = setInterval(count, 10);
+            }
+
+            else
+            {
+                clearInterval(x);
+                help=true;
+                if(licznik===0)
+                {
+                    finito();
+                }
+            }
+        }
+        function leav()
+        {
+            if(help) x=setInterval(count, 10);
+        }
+
+        document.getElementById("centrum").onmouseenter=start;
+        document.getElementById("centrum").onmouseleave=leav;
+    </script>
+</body>
+</html>
