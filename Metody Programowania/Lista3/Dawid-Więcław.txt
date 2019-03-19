@@ -1,0 +1,33 @@
+Zadanie 9
+Dawid Więcław
+(1) Teza: (map f (append xs ys))    =    (append (map f xs) (map f ys))
+
+    (a) (null? xs):
+        Lewa: (map f (append xs ys)) = (map f (append null ys)) = (map f ys)
+        Prawa: (append (map f xs) (map f ys)) = (append null (map f ys)) = (map f ys) = Lewa
+
+    (b) xs jest lista jednoelementową:
+        Lewa: (map f (append xs ys)) = (map f (cons (car xs) ys))
+        Prawa: (append (map f xs) (map f ys)) = (cons (f (car xs)) (map f ys)) = Lewa
+
+    (c) xs zawiera conajmniej dwie wartości; xs = (cons x l), gdzie l jest conajmniej jednoelementową listą:
+        Lewa: (map f (append xs ys)) = (map f (append (cons x l) ys)) = (map f (cons x (append l ys))) = (cons (f x) (map f (append (l ys))))  		= (z zalozenia indukcyjnego) = (cons (f x) (append (map f l) (map f ys))) = (append (map f (cons x l)) (map f ys)) =                   		= (append (map f xs) (map f ys)) = Prawa co kończy dowód
+
+(2) Teza: (filter f? (append xs ys))    =    (append (filter f? xs) (filter? f ys))
+
+    (a) (null? xs):
+        Lewa: (filter f? (append xs ys)) = (filter f? (append null ys)) = (filter f? ys)
+        Prawa: (append (filter f? xs) (filter f? ys)) = (append null (filter f? ys)) = (filter f? ys) = Lewa
+
+    (b) xs jest lista jednoelementową:
+        Lewa: (filter f? (append xs ys)) = (filter f? (cons (car xs) ys))
+        Prawa: (append (filter f? xs) (filter f? ys)) = *
+	I * = (append xs (filter f? ys)) gdy (car xs) spełnia predykat
+        II * = (filter? ys) gdy (car xs) nie spełnia predykatu
+        co ostatecznie daje * = (filter f? (cons (car xs) ys))
+
+    (c) xs jest lista co najmniej 2 elementową xs = (cons x l) gdzie l jest listą conajmniej jednoelemetnową:
+        (filter f? (append xs ys)) = (filter f? (append (cons x l) ys)) = (filter f? (cons x (append l ys))) = **
+        I ** = (cons x (append (filter f? l) (filter f? ys))) = (append (filter f? xs) (filter f? ys)) gdy x spełnia predykat
+        II ** = (append (filter f? l) (filter f? ys)) = (append (filter f? xs) (filter f? ys)) gdy x nie spełnia predykatu
+        co kończy dowód
